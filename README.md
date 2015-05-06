@@ -3,6 +3,7 @@ Create the animation using sprite sheet in cocos2dx for android platform.
 
 Below is the screen shot of the sprite animation.
 
-![device-2015-05-06-105922]
-(https://cloud.githubusercontent.com/assets/559262/7487956/cacfebe2-f3df-11e4-9ea9-39c03be06ce3.png)
+![output_pkjw2x]
+(https://cloud.githubusercontent.com/assets/559262/7488100/6434fb18-f3e2-11e4-8ff3-a3f36c352f8c.gif)
+
 
