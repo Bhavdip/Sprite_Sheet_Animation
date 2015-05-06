@@ -1,5 +1,5 @@
+# define COCOS2D_DEBUG 1
 #include "HelloWorldScene.h"
-
 
 using namespace cocos2d;
 
@@ -24,7 +24,7 @@ Scene* HelloWorld::scene()
 
 // on "init" you need to initialize your instance
 bool HelloWorld::init() {
-    if ( !LayerColor::initWithColor(Color4B(255, 255, 255, 255))) return false;
+    if ( !LayerColor::initWithColor(Color4B(0, 0,0, 0))) return false;
     return true;
 }
 
@@ -35,10 +35,13 @@ void HelloWorld::onEnter() {
     TimeblastSprite();
 
     TickingBombSprite();
+
+    TwenkelSprite();
 }
 
 
 void HelloWorld::TimeblastSprite(){
+	CCLOG("TimeblastSprite");
 
 	SpriteFrameCache* frameCache = SpriteFrameCache::getInstance();
 	frameCache->addSpriteFramesWithFile("timeblast.plist");
@@ -66,6 +69,7 @@ void HelloWorld::TimeblastSprite(){
 }
 
 void HelloWorld::TickingBombSprite(){
+	CCLOG("TickingBombSprite");
 
 	SpriteFrameCache* frameCache = SpriteFrameCache::getInstance();
 	frameCache->addSpriteFramesWithFile("tickingbomb.plist");
@@ -90,6 +94,36 @@ void HelloWorld::TickingBombSprite(){
 	sprite_ticking_bomb->runAction(action);
 
 	spritesheet_tickingbomb->addChild(sprite_ticking_bomb);
+}
+
+void HelloWorld::TwenkelSprite(){
+	CCLOG("TwenkelSprite");
+
+	SpriteFrameCache* twenkelCache = SpriteFrameCache::getInstance();
+	twenkelCache->addSpriteFramesWithFile("Twenkel.plist");
+	CCLOG("SpriteFrameCache");
+
+	SpriteBatchNode* spritesheet_batch_node = SpriteBatchNode::create("Twenkel.png");
+	this->addChild(spritesheet_batch_node);
+	CCLOG("SpriteBatchNode");
+
+	Vector<SpriteFrame*> twenkelFrames(29);
+	for (int t = 1; t <= 29; t++) {
+		SpriteFrame* newFrame = twenkelCache->getSpriteFrameByName(StringUtils::format("tween_%d.png",t));
+		twenkelFrames.pushBack(newFrame);
+		CCLOG("TwenkelSprite[%d]", t);
+	}
+	Animation* runTwenkelAnim = Animation::createWithSpriteFrames(twenkelFrames, 0.3);
+
+	Sprite* sprite_twenkel = Sprite::createWithSpriteFrameName("tween_1.png");
+	Size winsize = Director::getInstance()->getWinSize();
+	sprite_twenkel->setPosition(Point(winsize.width*0.5, winsize.height*0.10));
+	Action* action = RepeatForever::create( Animate::create(runTwenkelAnim) );
+	sprite_twenkel->runAction(action);
+	CCLOG("sprite_twenkel : runAction");
+
+	spritesheet_batch_node->addChild(sprite_twenkel);
+	CCLOG("spritesheet_batch_node : addChild : sprite_twenkel");
 }
 
 void HelloWorld::menuCloseCallback()
